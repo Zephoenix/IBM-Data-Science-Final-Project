@@ -1,0 +1,47 @@
+# Add marker_cluster to current site_map
+
+
+# # for each row in spacex_df data frame
+# # create a Marker object with its coordinate
+# # and customize the Marker's icon property to indicate if this launch was successed or failed, 
+# # e.g., icon=folium.Icon(color='white', icon_color=row['marker_color']
+# for index, record in spacex_df.iterrows():
+#     # TODO: Create and add a Marker cluster to the site map
+#     # marker = folium.Marker(...)
+#     marker_cluster.add_child(marker)
+
+# for index, row in spacex_df.iterrows():
+#     folium.Marker(
+#         location=[row['Lat'], row['Long']],
+#         icon=folium.Icon(color='white', icon_color=row['marker_color']),
+#         popup=row['Launch_Site'],
+#     ).add_to(marker_cluster)
+
+# site_map.add_child(marker_cluster)
+# site_map
+# spacex_dff = spacex_df.to_json()
+# for index, row in spacex_df.iterrows():
+#     folium.Marker(
+#         location=[row['Lat'], row['Long']],
+#         icon=folium.Icon(color='white', icon_color=row['marker_color']),
+#         popup=row['Launch_Site'],
+#     ).add_to(marker_cluster)
+
+# site_map.add_child(marker_cluster)
+# site_map
+
+
+launch_locations = folium.map.FeatureGroup()
+
+for lat, long, label in zip(spacex_df.Lat, spacex_df.Long, spacex_df.Launch_Site):
+    launch_locations.add_child(
+        folium.CircleMarker(
+             [lat, long], popup=label,
+             radius=5, 
+             color='orange',
+             fill=True,
+             fill_opacity=0.6
+         )
+     )
+
+site_map.add_child(launch_locations)
